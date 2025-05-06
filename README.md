@@ -1,27 +1,50 @@
-# SbdspAngular
+# itd-quest-design-system-sbdsp-angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.15.
+Repository for the **Quest Design System** (ITD department) Angular
+implementation and Storybook.
 
-## Development server
+## Quick Start
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Install deps and start Storybook / dev server:
 
-## Code scaffolding
+```
+npm install
+npm run start
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Navigate to `http://localhost:4200/` (Angular app) or the configured Storybook
+URL if separate.
 
-## Build
+## Development
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+This project was generated with
+[Angular CLI](https://github.com/angular/angular-cli) v17.3.15.
 
-## Running unit tests
+Generate new artifacts:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+ng generate component ComponentName
+ng generate service feature/Thing
+```
 
-## Running end-to-end tests
+Build the library/app:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+ng build
+```
 
-## Further help
+Run tests:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+ng test
+```
+
+## Contributing
+
+Follow conventional commits when possible. Open a PR against `main` after
+ensuring lint/tests pass locally.
+
+## Help
+
+For more Angular CLI commands see the
+[Angular CLI Reference](https://angular.io/cli).
