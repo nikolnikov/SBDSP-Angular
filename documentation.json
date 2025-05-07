@@ -45,9 +45,7 @@
             "selector": "app-root",
             "styleUrls": [],
             "styles": [],
-            "templateUrl": [
-                "./app.component.html"
-            ],
+            "templateUrl": ["./app.component.html"],
             "viewProviders": [],
             "hostDirectives": [],
             "inputsClass": [],
@@ -333,9 +331,7 @@
                     "line": 111,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "modifierKind": [
-                        123
-                    ],
+                    "modifierKind": [123],
                     "jsdoctags": [
                         {
                             "name": "value",
@@ -667,9 +663,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSBadgeComponent",
@@ -841,9 +835,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSButtonComponent",
@@ -984,9 +976,7 @@
                     "optional": false,
                     "description": "",
                     "line": 62,
-                    "modifierKind": [
-                        123
-                    ]
+                    "modifierKind": [123]
                 }
             ],
             "methodsClass": [
@@ -1189,9 +1179,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSCheckboxComponent",
@@ -1357,9 +1345,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSContextualMenuComponent",
@@ -1423,9 +1409,7 @@
                             "stringifiedArguments": "'menu', {static: true}"
                         }
                     ],
-                    "modifierKind": [
-                        170
-                    ]
+                    "modifierKind": [170]
                 }
             ],
             "methodsClass": [
@@ -1541,9 +1525,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSDatepickerComponent",
@@ -1843,9 +1825,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSDividerComponent",
@@ -1962,9 +1942,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSFooterComponent",
@@ -2121,9 +2099,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSHeaderComponent",
@@ -2376,9 +2352,7 @@
                             "stringifiedArguments": "'document:click', ['$event']"
                         }
                     ],
-                    "modifierKind": [
-                        170
-                    ],
+                    "modifierKind": [170],
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -2525,9 +2499,7 @@
                             "deprecationMessage": ""
                         }
                     ],
-                    "argsDecorator": [
-                        "$event"
-                    ],
+                    "argsDecorator": ["$event"],
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 315
@@ -2589,9 +2561,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSIconButtonComponent",
@@ -2920,9 +2890,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSInputComponent",
@@ -3146,9 +3114,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSInputSelectComponent",
@@ -3363,9 +3329,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSLinkComponent",
@@ -3526,9 +3490,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSLoaderComponent",
@@ -3704,9 +3666,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSMessageComponent",
@@ -3887,9 +3847,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSModalComponent",
@@ -4016,10 +3974,7 @@
                             "stringifiedArguments": "MAT_DIALOG_DATA"
                         }
                     ],
-                    "modifierKind": [
-                        170,
-                        125
-                    ]
+                    "modifierKind": [170, 125]
                 },
                 {
                     "name": "dialogRef",
@@ -4030,9 +3985,7 @@
                     "optional": false,
                     "description": "",
                     "line": 92,
-                    "modifierKind": [
-                        125
-                    ]
+                    "modifierKind": [125]
                 }
             ],
             "methodsClass": [
@@ -4142,9 +4095,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSNavRailComponent",
@@ -4379,9 +4330,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSPaginationComponent",
@@ -4506,9 +4455,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSProgressBarComponent",
@@ -4615,9 +4562,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSProgressStepperComponent",
@@ -4751,9 +4696,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSRadioGroupComponent",
@@ -4896,9 +4839,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSSidesheetComponent",
@@ -5073,9 +5014,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSTableComponent",
@@ -5215,9 +5154,7 @@
                             "stringifiedArguments": "MatSort"
                         }
                     ],
-                    "modifierKind": [
-                        170
-                    ]
+                    "modifierKind": [170]
                 }
             ],
             "methodsClass": [
@@ -5439,9 +5376,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSTabsComponent",
@@ -5586,9 +5521,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSTagComponent",
@@ -5753,9 +5686,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSTextareaComponent",
@@ -5943,9 +5874,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSToastComponent",
@@ -6036,10 +5965,7 @@
                             "stringifiedArguments": "MAT_SNACK_BAR_DATA"
                         }
                     ],
-                    "modifierKind": [
-                        170,
-                        125
-                    ]
+                    "modifierKind": [170, 125]
                 },
                 {
                     "name": "hasDuration",
@@ -6061,9 +5987,7 @@
                     "optional": false,
                     "description": "",
                     "line": 57,
-                    "modifierKind": [
-                        125
-                    ]
+                    "modifierKind": [125]
                 }
             ],
             "methodsClass": [
@@ -6102,9 +6026,7 @@
                             "stringifiedArguments": "'window:resize', ['$event']"
                         }
                     ],
-                    "modifierKind": [
-                        170
-                    ]
+                    "modifierKind": [170]
                 },
                 {
                     "name": "updateOffset",
@@ -6115,9 +6037,7 @@
                     "line": 78,
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "modifierKind": [
-                        123
-                    ]
+                    "modifierKind": [123]
                 }
             ],
             "deprecated": false,
@@ -6127,9 +6047,7 @@
                 {
                     "name": "window:resize",
                     "args": [],
-                    "argsDecorator": [
-                        "$event"
-                    ],
+                    "argsDecorator": ["$event"],
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 74
@@ -6201,9 +6119,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSToggleComponent",
@@ -6346,9 +6262,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         },
         {
             "name": "QDSTooltipComponent",
@@ -6403,9 +6317,7 @@
                             "stringifiedArguments": "'tooltip', {static: true}"
                         }
                     ],
-                    "modifierKind": [
-                        170
-                    ]
+                    "modifierKind": [170]
                 },
                 {
                     "name": "trigger",
@@ -6422,9 +6334,7 @@
                             "stringifiedArguments": "'trigger', {static: true}"
                         }
                     ],
-                    "modifierKind": [
-                        170
-                    ]
+                    "modifierKind": [170]
                 }
             ],
             "methodsClass": [
@@ -6494,9 +6404,7 @@
                 ]
             },
             "extends": [],
-            "implements": [
-                "AfterViewInit"
-            ]
+            "implements": ["AfterViewInit"]
         }
     ],
     "modules": [

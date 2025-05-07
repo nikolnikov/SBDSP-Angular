@@ -1,4 +1,4 @@
-# itd-quest-design-system-sbdsp-angular
+# SbdspAngular
 
 Repository for the **Quest Design System** (ITD department) Angular
 implementation and Storybook.
