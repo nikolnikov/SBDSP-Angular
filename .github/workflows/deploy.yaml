@@ -16,20 +16,38 @@ permissions:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        # Job steps
         steps:
-            # Manual Checkout
             - uses: actions/checkout@v4
               with:
                   fetch-depth: 0
-            # Set up Node
-            - uses: actions/setup-node@v4
+            - uses: nodejs/setup-node@v3
               with:
-                  node-version: '20'
-            #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
-            - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+                  node-version: 20
+            - run: npm install -g @storybook/cli
+            - run: npm install
+            - run: npm run build
+            - name: Deploy to GitHub Pages
+              uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
               with:
-                  install_command: npm install # default: npm ci
-                  build_command: npm run build-storybook # default: npm run build-storybook
-                  path: storybook-static # default: dist/storybook
-                  checkout: false # default: true
+                  build_command: npm run build-storybook
+                  output_dir: storybook-static
+# jobs:
+#     deploy:
+#         runs-on: ubuntu-latest
+#         # Job steps
+#         steps:
+#             # Manual Checkout
+#             - uses: actions/checkout@v4
+#               with:
+#                   fetch-depth: 0
+#             # Set up Node
+#             - uses: actions/setup-node@v4
+#               with:
+#                   node-version: '20'
+#             #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
+#             - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+#               with:
+#                   install_command: npm install # default: npm ci
+#                   build_command: npm run build-storybook # default: npm run build-storybook
+#                   path: storybook-static # default: dist/storybook
+#                   checkout: false # default: true
