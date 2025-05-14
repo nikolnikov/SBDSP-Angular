@@ -27,8 +27,8 @@ jobs:
             - run: npm install -g @angular/cli
             - run: npm install -g @storybook/cli
             - run: npm install
-            - run: npm run build-storybook
             - name: Deploy to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
+              uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
               with:
-                  publish_dir: storybook-static
+                  build_command: npm run build-storybook
+                  path: storybook-static
