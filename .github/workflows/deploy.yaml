@@ -26,7 +26,6 @@ jobs:
             - run: npm install -g @angular/cli
             - run: npm install -g @storybook/cli
             - run: npm install
-            - run: npm run build
             - name: Deploy to GitHub Pages
               uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
               with:
