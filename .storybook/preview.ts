@@ -24,13 +24,16 @@ const preview: Preview = {
             ]
         })
     ],
+
     parameters: {
         options: {
             storySort: {
                 method: 'alphabetical'
             }
         }
-    }
+    },
+
+    tags: ['autodocs']
 };
 
 export default preview;

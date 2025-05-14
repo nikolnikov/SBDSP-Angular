@@ -85,8 +85,7 @@
                     "options": {
                         "configDir": ".storybook",
                         "browserTarget": "sbdsp-angular:build",
-                        "compodoc": true,
-                        "compodocArgs": ["-e", "json", "-d", "."],
+                        "compodoc": false,
                         "port": 6007
                     }
                 },
@@ -95,8 +94,7 @@
                     "options": {
                         "configDir": ".storybook",
                         "browserTarget": "sbdsp-angular:build",
-                        "compodoc": true,
-                        "compodocArgs": ["-e", "json", "-d", "."],
+                        "compodoc": false,
                         "outputDir": "storybook-static"
                     }
                 }
