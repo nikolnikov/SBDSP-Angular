@@ -25,10 +25,9 @@ jobs:
               run: |
                   rm -rf node_modules
                   rm -rf package-lock.json
-            - run: npm install
-            - run: npm run build-storybook
-            - name: Deploy to GitHub Pages
-              uses: JamesIves/github-pages-deploy-action@v4
+            - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
               with:
-                  folder: storybook-static
-                  clean: true
+                  install_command: npm install # default: npm ci
+                  build_command: npm run build-storybook # default: npm run build-storybook
+                  path: storybook-static # default: dist/storybook
+                  checkout: false # default: true
