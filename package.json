@@ -4,11 +4,11 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build",
+        "build": "npx ng build",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "storybook": "NODE_ENV=development ng run sbdsp-angular:storybook",
-        "build-storybook": "npx ng run sbdsp-angular:build-storybook"
+        "build-storybook": "npx ng sbdsp-angular:build-storybook"
     },
     "private": true,
     "dependencies": {
