@@ -21,7 +21,7 @@ const meta: Meta<QDSMessageComponent> = {
             },
             table: {
                 type: {
-                    summary: '[{ title: string; action: string; }]'
+                    summary: '[{ label: string; action: string; }]'
                 }
             }
         },
@@ -77,8 +77,8 @@ export default meta;
 export const InformativeMessage = {
     args: {
         actions: [
-            { title: 'Yes', action: null },
-            { title: 'No', action: null }
+            { label: 'Yes', action: null },
+            { label: 'No', action: null }
         ],
         message:
             "We've sent you an email detailing your recent account changes. Didn't receive an email? Click below.",

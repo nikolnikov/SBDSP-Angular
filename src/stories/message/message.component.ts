@@ -30,7 +30,7 @@ import {
                         href="action.action"
                         *ngFor="let action of actions; let i = index"
                     >
-                        {{ action.title }}
+                        {{ action.label }}
                     </a>
                 </div>
             </div>
@@ -70,7 +70,10 @@ export class QDSMessageComponent implements AfterViewInit {
         return iconType[this.type] || 'info';
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

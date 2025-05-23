@@ -22,9 +22,8 @@ import { Observable, startWith, map } from 'rxjs';
         <mat-form-field
             class="ds-input"
             [class]="customClasses"
-            [class.--error]="
-                formControlId && formControlId.invalid && formControlId.touched
-            "
+            [class.--error]="hasError"
+            [class.mat-form-field-disabled]="isDisabled"
             [class.--required]="isRequired"
             [ngStyle]="{ 'max-width.px': maxWidth ? maxWidth : null }"
         >
@@ -59,18 +58,11 @@ import { Observable, startWith, map } from 'rxjs';
                 </mat-option>
             </mat-autocomplete>
 
-            <div *ngIf="hintMessage" class="ds-input__hint">
+            <div *ngIf="hintMessage && !errorMessage" class="ds-input__hint">
                 {{ hintMessage }}
             </div>
 
-            <div
-                *ngIf="
-                    formControlId &&
-                    formControlId.invalid &&
-                    formControlId.touched
-                "
-                class="ds-input__error"
-            >
+            <div *ngIf="errorMessage && hasError" class="ds-input__error">
                 {{ errorMessage }}
             </div>
         </mat-form-field>
@@ -81,11 +73,13 @@ export class QDSAutocompleteComponent {
     @Input() formControlId: FormControl = new FormControl();
     @Input() errorMessage: string = '';
     @Input() hintMessage: string = '';
+    @Input() hasError: boolean = false;
     @Input() hasIcon: boolean = false;
     @Input() inputId: string = '';
     @Input() label: string = '';
     @Input() panelClasses: string = '';
     @Input() placeholder: string = '';
+    @Input() isDisabled: boolean = false;
     @Input() isRequired: boolean = false;
     @Input() maxWidth: number = 0;
     @Input() options: any[] = [];

@@ -17,6 +17,7 @@ import {
             [class.--small]="isSmall"
             [mode]="isDeterminate ? 'determinate' : 'indeterminate'"
             [value]="progressValue"
+            [strokeWidth]="12"
         ></mat-spinner>
     `
 })
@@ -41,7 +42,10 @@ export class QDSLoaderComponent implements AfterViewInit {
         }, 10);
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

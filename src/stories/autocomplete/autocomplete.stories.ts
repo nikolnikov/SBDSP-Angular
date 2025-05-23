@@ -25,7 +25,7 @@ const meta: Meta<QDSAutocompleteComponent> = {
                 }
             }
         },
-        formControlId: {
+        errorMessage: {
             control: {
                 type: 'text'
             },
@@ -35,27 +35,7 @@ const meta: Meta<QDSAutocompleteComponent> = {
                 }
             }
         },
-        inputId: {
-            control: {
-                type: 'text'
-            },
-            table: {
-                type: {
-                    summary: 'string'
-                }
-            }
-        },
-        options: {
-            control: {
-                type: 'object'
-            },
-            table: {
-                type: {
-                    summary: '[]'
-                }
-            }
-        },
-        isRequired: {
+        hasError: {
             control: {
                 type: 'boolean'
             },
@@ -64,16 +44,6 @@ const meta: Meta<QDSAutocompleteComponent> = {
                     summary: 'boolean'
                 },
                 defaultValue: { summary: 'false' }
-            }
-        },
-        placeholder: {
-            control: {
-                type: 'text'
-            },
-            table: {
-                type: {
-                    summary: 'string'
-                }
             }
         },
         hasIcon: {
@@ -87,7 +57,7 @@ const meta: Meta<QDSAutocompleteComponent> = {
                 defaultValue: { summary: 'false' }
             }
         },
-        errorMessage: {
+        hintMessage: {
             control: {
                 type: 'text'
             },
@@ -97,7 +67,47 @@ const meta: Meta<QDSAutocompleteComponent> = {
                 }
             }
         },
-        hintMessage: {
+        formControlId: {
+            control: {
+                type: 'text'
+            },
+            table: { disable: true }
+        },
+        inputId: {
+            control: {
+                type: 'text'
+            },
+            table: { disable: true }
+        },
+        isDisabled: {
+            control: {
+                type: 'boolean'
+            },
+            table: {
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: { summary: 'false' }
+            }
+        },
+        isRequired: {
+            control: {
+                type: 'boolean'
+            },
+            table: {
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: { summary: 'false' }
+            }
+        },
+        options: {
+            control: {
+                type: 'object'
+            },
+            table: { disable: true }
+        },
+        placeholder: {
             control: {
                 type: 'text'
             },
@@ -111,11 +121,7 @@ const meta: Meta<QDSAutocompleteComponent> = {
             control: {
                 type: 'number'
             },
-            table: {
-                type: {
-                    summary: 'number'
-                }
-            }
+            table: { disable: true }
         }
     }
 };
