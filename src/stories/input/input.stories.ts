@@ -4,7 +4,7 @@ import { QDSLoaderComponent } from '../loader/loader.component';
 import { MaterialModule } from '../../app/material.module';
 
 const meta: Meta<QDSInputComponent> = {
-    title: 'Components/Text input',
+    title: 'Components/Inputs/Text input',
     component: QDSInputComponent,
     decorators: [
         moduleMetadata({

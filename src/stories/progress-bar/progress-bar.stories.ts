@@ -2,7 +2,7 @@ import { Meta } from '@storybook/angular';
 import { QDSProgressBarComponent } from './progress-bar.component';
 
 const meta: Meta<QDSProgressBarComponent> = {
-    title: 'Components/Progress bar',
+    title: 'Components/Progress indicator/Progress bar',
     component: QDSProgressBarComponent,
     parameters: {
         layout: 'centered',

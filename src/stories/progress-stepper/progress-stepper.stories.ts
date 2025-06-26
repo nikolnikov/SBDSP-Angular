@@ -2,7 +2,7 @@ import { Meta } from '@storybook/angular';
 import { QDSProgressStepperComponent } from './progress-stepper.component';
 
 const meta: Meta<QDSProgressStepperComponent> = {
-    title: 'Components/Progress stepper',
+    title: 'Components/Progress indicator/Progress stepper',
     component: QDSProgressStepperComponent,
     parameters: {
         layout: 'centered',

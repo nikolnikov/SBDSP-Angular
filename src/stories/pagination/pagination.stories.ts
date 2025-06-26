@@ -3,7 +3,7 @@ import { QDSPaginationComponent } from './pagination.component';
 import { MaterialModule } from '../../app/material.module';
 
 const meta: Meta<QDSPaginationComponent> = {
-    title: 'Components/Pagination',
+    title: 'Components/Navigation/Pagination',
     component: QDSPaginationComponent,
     decorators: [
         moduleMetadata({

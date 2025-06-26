@@ -3,7 +3,7 @@ import { QDSLoaderComponent } from './loader.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const meta: Meta<QDSLoaderComponent> = {
-    title: 'Components/Loader',
+    title: 'Components/Loader/Spinner',
     component: QDSLoaderComponent,
     decorators: [
         moduleMetadata({

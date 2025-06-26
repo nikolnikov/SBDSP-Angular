@@ -3,7 +3,7 @@ import { QDSTextareaComponent } from './textarea.component';
 import { MaterialModule } from '../../app/material.module';
 
 const meta: Meta<QDSTextareaComponent> = {
-    title: 'Components/Text area',
+    title: 'Components/Inputs/Text area',
     component: QDSTextareaComponent,
     decorators: [
         moduleMetadata({

@@ -3,7 +3,7 @@ import { MaterialModule } from '../../app/material.module';
 import { QDSHeaderComponent } from './header.component';
 
 const meta: Meta<QDSHeaderComponent> = {
-    title: 'Components/Navigation/Header',
+    title: 'Components/Navigation/Page header',
     component: QDSHeaderComponent,
     parameters: {
         layout: 'centered',
