@@ -3,7 +3,7 @@ import { QDSInputSelectComponent } from './select.component';
 import { MaterialModule } from '../../app/material.module';
 
 const meta: Meta<QDSInputSelectComponent> = {
-    title: 'Components/Inputs/Multi selects',
+    title: 'Components/Inputs/Multi select',
     component: QDSInputSelectComponent,
     decorators: [
         moduleMetadata({

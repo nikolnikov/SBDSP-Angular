@@ -224,3 +224,7 @@ body.sb-show-main.dark-theme {
 #story--components-pagination--default-pagination--primary-inner {
     justify-content: flex-end !important;
 }
+
+.ds-button {
+    margin: auto;
+}
