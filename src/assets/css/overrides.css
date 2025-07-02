@@ -234,3 +234,14 @@ body.sb-show-main.dark-theme {
     text-align: center;
     width: 100%;
 }
+
+#storybook-root qds-datepicker {
+    margin: auto;
+    max-width: 280px;
+}
+
+#storybook-root .ds-skeleton-loader .ds-card {
+    margin: 0 auto;
+    max-width: fit-content;
+    text-align: left;
+}
