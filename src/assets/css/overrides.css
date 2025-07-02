@@ -245,6 +245,6 @@ body.sb-show-main.dark-theme {
     text-align: left;
 }
 
-#storybook-root .ds-modal__actions .ds-button.--ghost {
+.ds-modal__actions .ds-button.--ghost {
     margin: 0;
 }
