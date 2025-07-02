@@ -244,3 +244,7 @@ body.sb-show-main.dark-theme {
     max-width: fit-content;
     text-align: left;
 }
+
+#storybook-root .ds-modal__actions .ds-button.--ghost {
+    margin: 0;
+}
