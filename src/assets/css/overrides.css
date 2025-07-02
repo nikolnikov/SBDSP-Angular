@@ -228,3 +228,8 @@ body.sb-show-main.dark-theme {
 .ds-button {
     margin: auto;
 }
+
+
+#storybook-root {
+    text-align: center;
+}
