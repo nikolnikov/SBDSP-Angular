@@ -229,11 +229,6 @@ body.sb-show-main.dark-theme {
     margin: auto;
 }
 
-
-#storybook-root {
-    width: 100%;
-}
-
 #storybook-root qds-datepicker {
     margin: auto;
     max-width: 280px;
