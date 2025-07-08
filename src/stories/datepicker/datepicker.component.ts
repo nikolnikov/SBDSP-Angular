@@ -58,9 +58,11 @@ import { MatNativeDateModule } from '@angular/material/core';
                     matSuffix
                     [for]="pickerRange"
                 ></mat-datepicker-toggle>
+
                 <mat-date-range-picker
                     [panelClass]="panelClasses"
                     #pickerRange
+                    xPosition="end"
                 ></mat-date-range-picker>
 
                 <div *ngIf="hintMessage" class="ds-input__hint">
@@ -117,6 +119,7 @@ import { MatNativeDateModule } from '@angular/material/core';
                 <mat-datepicker
                     [panelClass]="panelClasses"
                     #picker
+                    xPosition="end"
                 ></mat-datepicker>
 
                 <div *ngIf="hintMessage" class="ds-input__hint">
@@ -155,7 +158,10 @@ export class QDSDatepickerComponent implements AfterViewInit {
         this.getSelection.emit(selection);
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();
