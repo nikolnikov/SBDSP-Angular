@@ -237,3 +237,7 @@ body.sb-show-main.dark-theme {
 .ds-modal__actions .ds-button.--ghost {
     margin: 0;
 }
+
+#storybook-root hr {
+    width: calc(100vw - 30px);
+}
