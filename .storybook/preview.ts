@@ -22,7 +22,20 @@ const preview: Preview = {
                     useValue: { overlayPanelClass: 'ds-overlay-panel' }
                 }
             ]
-        })
+        }),
+        (storyFn, context) => {
+            const storyName = context.name.toLowerCase();
+
+            if (storyName.includes('inverse')) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+
+            const story = storyFn();
+
+            return story;
+        }
     ],
 
     parameters: {
