@@ -112,19 +112,6 @@ const meta: Meta<QDSDatepickerComponent> = {
                 }
             }
         },
-        isSimple: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
-                }
-            }
-        },
         placeholder: {
             control: {
                 type: 'text'
@@ -153,17 +140,6 @@ export const BasicDatepicker = {
                 disable: true
             }
         }
-    }
-};
-
-export const SimpleDatepicker = {
-    args: {
-        ...BasicDatepicker.args,
-        inputId: 'datepicker-2',
-        isSimple: true
-    },
-    argTypes: {
-        ...BasicDatepicker.argTypes
     }
 };
 

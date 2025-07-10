@@ -87,31 +87,17 @@ import { MatNativeDateModule } from '@angular/material/core';
                     <span>{{ label }}</span>
                 </mat-label>
 
-                <ng-container *ngIf="isSimple; else datepicker">
-                    <input
-                        matInput
-                        placeholder="{{ placeholder }}"
-                        value=""
-                        [id]="inputId"
-                        type="date"
-                        [min]="minDate ? minDate : ''"
-                        [max]="maxDate ? maxDate : ''"
-                    />
-                </ng-container>
-                <ng-template #datepicker>
-                    <input
-                        matInput
-                        placeholder="{{ placeholder }}"
-                        value=""
-                        [id]="inputId"
-                        [matDatepicker]="picker"
-                        [min]="minDate ? minDate : ''"
-                        [max]="maxDate ? maxDate : ''"
-                    />
-                </ng-template>
+                <input
+                    matInput
+                    placeholder="{{ placeholder }}"
+                    value=""
+                    [id]="inputId"
+                    [matDatepicker]="picker"
+                    [min]="minDate ? minDate : ''"
+                    [max]="maxDate ? maxDate : ''"
+                />
 
                 <mat-datepicker-toggle
-                    *ngIf="!isSimple"
                     matSuffix
                     [for]="picker"
                 ></mat-datepicker-toggle>
@@ -145,7 +131,6 @@ export class QDSDatepickerComponent implements AfterViewInit {
     @Input() isDisabled: boolean = false;
     @Input() isRange: boolean = false;
     @Input() isRequired: boolean = false;
-    @Input() isSimple: boolean = false;
     @Input() label: string = '';
     @Input() maxDate: Date | null = null;
     @Input() minDate: Date | null = null;
