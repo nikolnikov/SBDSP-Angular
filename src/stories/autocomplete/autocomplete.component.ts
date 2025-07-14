@@ -19,44 +19,46 @@ import { Observable, startWith, map } from 'rxjs';
         MatInputModule
     ],
     template: `
-        <mat-form-field
-            class="ds-input"
-            [class]="customClasses"
-            [class.--error]="hasError"
-            [class.mat-form-field-disabled]="isDisabled"
-            [class.--required]="isRequired"
-            [ngStyle]="{ 'max-width.px': maxWidth ? maxWidth : null }"
-        >
-            <mat-label *ngIf="label" class="ds-input__label">
-                <span>{{ label }}</span>
-            </mat-label>
-            <span *ngIf="hasIcon" class="ds-icon--search" matPrefix></span>
-            <input
-                type="text"
-                matInput
-                [matAutocomplete]="auto"
-                [formControl]="formControlId"
-                [id]="inputId"
-                [placeholder]="placeholder"
-                [required]="isRequired"
-            />
-            <mat-autocomplete
-                class="ds-dropdown"
-                [class]="panelClasses"
-                #auto="matAutocomplete"
-                (optionSelected)="onSelectionChange($event.option.value)"
+        <div class="ds-input__wrapper">
+            <mat-form-field
+                class="ds-input"
+                [class]="customClasses"
+                [class.--error]="hasError"
+                [class.mat-form-field-disabled]="isDisabled"
+                [class.--required]="isRequired"
+                [ngStyle]="{ 'max-width.px': maxWidth ? maxWidth : null }"
             >
-                <mat-option
-                    *ngFor="
-                        let option of filteredOptions | async;
-                        trackBy: trackByOption
-                    "
-                    class="ds-dropdown__item"
-                    [value]="option"
+                <mat-label *ngIf="label" class="ds-input__label">
+                    <span>{{ label }}</span>
+                </mat-label>
+                <span *ngIf="hasIcon" class="ds-icon--search" matPrefix></span>
+                <input
+                    type="text"
+                    matInput
+                    [matAutocomplete]="auto"
+                    [formControl]="formControlId"
+                    [id]="inputId"
+                    [placeholder]="placeholder"
+                    [required]="isRequired"
+                />
+                <mat-autocomplete
+                    class="ds-dropdown"
+                    [class]="panelClasses"
+                    #auto="matAutocomplete"
+                    (optionSelected)="onSelectionChange($event.option.value)"
                 >
-                    {{ option }}
-                </mat-option>
-            </mat-autocomplete>
+                    <mat-option
+                        *ngFor="
+                            let option of filteredOptions | async;
+                            trackBy: trackByOption
+                        "
+                        class="ds-dropdown__item"
+                        [value]="option"
+                    >
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
 
             <div *ngIf="hintMessage && !errorMessage" class="ds-input__hint">
                 {{ hintMessage }}
@@ -65,7 +67,7 @@ import { Observable, startWith, map } from 'rxjs';
             <div *ngIf="errorMessage && hasError" class="ds-input__error">
                 {{ errorMessage }}
             </div>
-        </mat-form-field>
+        </div>
     `
 })
 export class QDSAutocompleteComponent {

@@ -24,99 +24,93 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatNativeDateModule
     ],
     template: `
-        <ng-container *ngIf="isRange; else singleDate">
-            <mat-form-field
-                class="ds-input"
-                [class]="customClasses"
-                [class.--error]="hasError"
-                [class.mat-form-field-invalid]="hasError"
-                [class.--required]="isRequired"
-                [class.mat-form-field-disabled]="isDisabled"
-            >
-                <mat-label *ngIf="label" class="ds-input__label">
-                    <span>{{ label }}</span>
-                </mat-label>
-
-                <mat-date-range-input
-                    [rangePicker]="pickerRange"
-                    [min]="minDate ? minDate : ''"
-                    [max]="maxDate ? maxDate : ''"
+        <div class="ds-input__wrapper">
+            <ng-container *ngIf="isRange; else singleDate">
+                <mat-form-field
+                    class="ds-input"
+                    [class]="customClasses"
+                    [class.--error]="hasError"
+                    [class.mat-form-field-invalid]="hasError"
+                    [class.--required]="isRequired"
+                    [class.mat-form-field-disabled]="isDisabled"
                 >
+                    <mat-label *ngIf="label" class="ds-input__label">
+                        <span>{{ label }}</span>
+                    </mat-label>
+
+                    <mat-date-range-input
+                        [rangePicker]="pickerRange"
+                        [min]="minDate ? minDate : ''"
+                        [max]="maxDate ? maxDate : ''"
+                    >
+                        <input
+                            matStartDate
+                            [id]="inputId"
+                            placeholder="{{ placeholder }}"
+                        />
+                        <input
+                            matEndDate
+                            [id]="endInputId"
+                            placeholder="{{ placeholder }}"
+                        />
+                    </mat-date-range-input>
+
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="pickerRange"
+                    ></mat-datepicker-toggle>
+
+                    <mat-date-range-picker
+                        [panelClass]="panelClasses"
+                        #pickerRange
+                        xPosition="end"
+                    ></mat-date-range-picker>
+                </mat-form-field>
+            </ng-container>
+            <ng-template #singleDate>
+                <mat-form-field
+                    class="ds-input"
+                    [class]="customClasses"
+                    [class.--error]="hasError"
+                    [class.mat-form-field-invalid]="hasError"
+                    [class.--disabled]="isDisabled"
+                    [class.--required]="isRequired"
+                >
+                    <mat-label *ngIf="label" class="ds-input__label">
+                        <span>{{ label }}</span>
+                    </mat-label>
+
                     <input
-                        matStartDate
+                        matInput
+                        placeholder="{{ placeholder }}"
+                        value=""
                         [id]="inputId"
-                        placeholder="{{ placeholder }}"
+                        [matDatepicker]="picker"
+                        [min]="minDate ? minDate : ''"
+                        [max]="maxDate ? maxDate : ''"
                     />
-                    <input
-                        matEndDate
-                        [id]="endInputId"
-                        placeholder="{{ placeholder }}"
-                    />
-                </mat-date-range-input>
 
-                <mat-datepicker-toggle
-                    matSuffix
-                    [for]="pickerRange"
-                ></mat-datepicker-toggle>
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
 
-                <mat-date-range-picker
-                    [panelClass]="panelClasses"
-                    #pickerRange
-                    xPosition="end"
-                ></mat-date-range-picker>
+                    <mat-datepicker
+                        [panelClass]="panelClasses"
+                        #picker
+                        xPosition="end"
+                    ></mat-datepicker>
+                </mat-form-field>
+            </ng-template>
 
-                <div *ngIf="hintMessage" class="ds-input__hint">
-                    {{ hintMessage }}
-                </div>
+            <div *ngIf="hintMessage" class="ds-input__hint">
+                {{ hintMessage }}
+            </div>
 
-                <div *ngIf="errorMessage" class="ds-input__error">
-                    {{ errorMessage }}
-                </div>
-            </mat-form-field>
-        </ng-container>
-        <ng-template #singleDate>
-            <mat-form-field
-                class="ds-input"
-                [class]="customClasses"
-                [class.--error]="hasError"
-                [class.mat-form-field-invalid]="hasError"
-                [class.--disabled]="isDisabled"
-                [class.--required]="isRequired"
-            >
-                <mat-label *ngIf="label" class="ds-input__label">
-                    <span>{{ label }}</span>
-                </mat-label>
-
-                <input
-                    matInput
-                    placeholder="{{ placeholder }}"
-                    value=""
-                    [id]="inputId"
-                    [matDatepicker]="picker"
-                    [min]="minDate ? minDate : ''"
-                    [max]="maxDate ? maxDate : ''"
-                />
-
-                <mat-datepicker-toggle
-                    matSuffix
-                    [for]="picker"
-                ></mat-datepicker-toggle>
-
-                <mat-datepicker
-                    [panelClass]="panelClasses"
-                    #picker
-                    xPosition="end"
-                ></mat-datepicker>
-
-                <div *ngIf="hintMessage" class="ds-input__hint">
-                    {{ hintMessage }}
-                </div>
-
-                <div *ngIf="errorMessage" class="ds-input__error">
-                    {{ errorMessage }}
-                </div>
-            </mat-form-field>
-        </ng-template>
+            <div *ngIf="errorMessage" class="ds-input__error">
+                {{ errorMessage }}
+            </div>
+        </div>
     `
 })
 export class QDSDatepickerComponent implements AfterViewInit {
