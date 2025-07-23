@@ -51,6 +51,16 @@ const meta: Meta<QDSBadgeComponent> = {
                 defaultValue: { summary: 'false' }
             }
         },
+        icon: {
+            control: {
+                type: 'text'
+            },
+            table: {
+                type: {
+                    summary: 'string'
+                }
+            }
+        },
         isCircle: {
             control: {
                 type: 'boolean'

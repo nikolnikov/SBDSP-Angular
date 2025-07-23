@@ -20,6 +20,12 @@ import {
             [class.--neutral]="!status"
             role="status"
         >
+            <span
+                [ngClass]="'ds-icon--' + icon"
+                *ngIf="icon && !hasNotification && !isCircle"
+                [attr.aria-label]="icon"
+                role="img"
+            ></span>
             {{ label }}
         </div>
     `
@@ -28,6 +34,7 @@ export class QDSBadgeComponent implements AfterViewInit {
     @Input() color: string = '';
     @Input() customClasses: string = '';
     @Input() hasNotification: boolean = false;
+    @Input() icon: string = '';
     @Input() isCircle: boolean = false;
     @Input() label: string = '';
     @Input() secondary: boolean = false;
@@ -47,7 +54,10 @@ export class QDSBadgeComponent implements AfterViewInit {
         return `--${this.status}`;
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();
