@@ -87,6 +87,10 @@ story--components-progress-bar--default-progress-bar--primary-inner,
     background: #034c1f;
 }
 
+[id*='anchor--components-navigation-page-footer'] .docs-story .css-1qq744x {
+    background: #fff;
+}
+
 .sb-story.sb-unstyled > div {
     display: flex;
     justify-content: center;

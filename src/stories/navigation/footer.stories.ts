@@ -73,18 +73,51 @@ const meta: Meta<QDSFooterComponent> = {
 export default meta;
 
 export const CorportateFooter = {
-    args: {}
+    args: {},
+    parameters: {
+        docs: {
+            source: {
+                language: 'html',
+                type: 'code',
+                code: `
+Please contact the Design System team for the Footer code snippet.
+                `.trim()
+            }
+        }
+    }
 };
 
 export const CorportateFooterWithNoLogo = {
     args: {
         hideLogo: true
+    },
+    parameters: {
+        docs: {
+            source: {
+                language: 'html',
+                type: 'code',
+                code: `
+Please contact the Design System team for the Footer code snippet.
+                `.trim()
+            }
+        }
     }
 };
 
 export const LightCorportateFooter = {
     args: {
         hideNav: true
+    },
+    parameters: {
+        docs: {
+            source: {
+                language: 'html',
+                type: 'code',
+                code: `
+Please contact the Design System team for the Footer code snippet.
+                `.trim()
+            }
+        }
     }
 };
 
@@ -92,5 +125,16 @@ export const LightCorportateFooterWithNoLogo = {
     args: {
         hideLogo: true,
         hideNav: true
+    },
+    parameters: {
+        docs: {
+            source: {
+                language: 'html',
+                type: 'code',
+                code: `
+Please contact the Design System team for the Footer code snippet.
+                `.trim()
+            }
+        }
     }
 };
