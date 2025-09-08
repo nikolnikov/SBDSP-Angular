@@ -189,3 +189,11 @@ export const DestructiveGhostButton = {
         type: 'ghost'
     }
 };
+
+export const CondensedGhostButton = {
+    args: {
+        ...PrimaryButton.args,
+        isCondensed: true,
+        type: 'ghost'
+    }
+};

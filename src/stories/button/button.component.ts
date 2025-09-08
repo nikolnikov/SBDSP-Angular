@@ -48,6 +48,7 @@ export class QDSButtonComponent {
     @Input() customClasses: string = '';
     @Input() icon: string = '';
     @Input() iconRight: string = '';
+    @Input() isCondensed: boolean = false;
     @Input() isDestructive: boolean = false;
     @Input() isDisabled: boolean = false;
     @Input() isInverse: boolean = false;
@@ -103,6 +104,7 @@ export class QDSButtonComponent {
             [`--${this.type}`]: !!this.type,
             '--primary': this.type !== 'secondary' && this.type !== 'ghost',
             [`--${this.size}`]: !!this.size,
+            '--condensed': this.isCondensed,
             '--destructive': this.isDestructive,
             '--disabled': this.isDisabled,
             '--inverse': this.isInverse,
