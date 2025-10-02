@@ -7,12 +7,13 @@ import {
     ViewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatMenu } from '@angular/material/menu';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { QDSIconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'qds-contextual-menu',
     standalone: true,
-    imports: [CommonModule, MatMenu],
+    imports: [CommonModule, MatMenuModule, QDSIconComponent],
     template: `
         <mat-menu
             class="ds-menu"
@@ -26,7 +27,7 @@ import { MatMenu } from '@angular/material/menu';
                 (click)="handleItemClick(item)"
                 *ngFor="let item of menuItems"
             >
-                <span *ngIf="item.icon" class="ds-icon--{{ item.icon }}"></span>
+                <qds-icon *ngIf="item.icon" [name]="item.icon" />
                 {{ item.label }}
             </button>
         </mat-menu>
@@ -49,7 +50,10 @@ export class QDSContextualMenuComponent implements AfterViewInit {
         }
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

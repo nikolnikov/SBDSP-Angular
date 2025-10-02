@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-tabs',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <div class="ds-tab-wrapper">
             <div class="ds-tab-set">
@@ -62,7 +65,10 @@ export class QDSTabsComponent implements AfterViewInit {
         });
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

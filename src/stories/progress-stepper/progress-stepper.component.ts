@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-progress-stepper',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <div
             class="ds-progress-stepper"
@@ -63,7 +66,10 @@ export class QDSProgressStepperComponent implements AfterViewInit {
         status?: string;
     }[] = [];
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

@@ -10,10 +10,19 @@ import {
     TemplateRef
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { QDSIconComponent } from '../icon/icon.component';
+import { QDSIconButtonComponent } from '../button/icon-button.component';
+import { QDSButtonComponent } from '../button/button.component';
 
 @Component({
     selector: 'qds-header',
-    imports: [CommonModule],
+    standalone: true,
+    imports: [
+        CommonModule,
+        QDSIconComponent,
+        QDSIconButtonComponent,
+        QDSButtonComponent
+    ],
     template: `
         <header class="ds-header" [class]="customClasses">
             <div
@@ -40,16 +49,16 @@ import { CommonModule } from '@angular/common';
                                             : toggleMenu(idx)
                                     "
                                 >
-                                    <span
+                                    <qds-icon
                                         *ngIf="navItem.icon"
-                                        class="ds-icon--{{ navItem.icon }}"
-                                    ></span>
+                                        [name]="navItem.icon"
+                                    />
                                     {{ navItem.label }}
 
-                                    <span
+                                    <qds-icon
                                         *ngIf="navItem.subNav"
-                                        class="ds-icon--caret-down"
-                                    ></span>
+                                        name="caret-down"
+                                    />
                                 </button>
 
                                 <div
@@ -68,12 +77,10 @@ import { CommonModule } from '@angular/common';
                                                 : (menuOpen = null)
                                         "
                                     >
-                                        <span
+                                        <qds-icon
                                             *ngIf="subNavItem.icon"
-                                            class="ds-icon--{{
-                                                subNavItem.icon
-                                            }}"
-                                        ></span>
+                                            [name]="subNavItem.icon"
+                                        />
                                         {{ subNavItem.label }}
                                     </button>
                                 </div>
@@ -89,9 +96,9 @@ import { CommonModule } from '@angular/common';
                             [ngClass]="{ '--active': notificationsOpen }"
                         >
                             <button (click)="toggleNotifications()">
-                                <span class="ds-icon--bell"></span>
+                                <qds-icon name="bell" />
                                 Notifications
-                                <span class="ds-icon--caret-down"></span>
+                                <qds-icon name="caret-down" />
                             </button>
 
                             <div
@@ -109,7 +116,7 @@ import { CommonModule } from '@angular/common';
                                     "
                                     class="ds-header__dropdown-item"
                                 >
-                                    <span class="ds-icon--bell"></span>
+                                    <qds-icon name="bell" />
 
                                     <div
                                         class="ds-header__notification-content"
@@ -120,35 +127,27 @@ import { CommonModule } from '@angular/common';
                                         </p>
                                     </div>
 
-                                    <button
-                                        class="ds-button --icon --sm"
+                                    <qds-icon-button
+                                        icon="close"
                                         (click)="
                                             onRemoveNotification(idx, $event)
                                         "
-                                    >
-                                        <span class="ds-icon--close"></span>
-                                    </button>
+                                        size="sm"
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <button
+                    <qds-button
                         *ngIf="button"
-                        class="ds-button --primary --sm"
-                        [disabled]="button.isDisabled"
-                        (click)="button.clickHandler?.()"
-                    >
-                        <span
-                            *ngIf="button.icon"
-                            class="ds-icon--{{ button.icon }}"
-                        ></span>
-                        <span>{{ button.label }}</span>
-                        <span
-                            *ngIf="button.iconRight"
-                            class="ds-icon--{{ button.iconRight }}"
-                        ></span>
-                    </button>
+                        [label]="button.label"
+                        [icon]="button.icon || ''"
+                        [iconRight]="button.iconRight || ''"
+                        [isDisabled]="button.isDisabled === true ? true : false"
+                        size="sm"
+                        (click)="button.clickHandler && button.clickHandler()"
+                    />
 
                     <div
                         *ngIf="userInitial"
@@ -171,7 +170,7 @@ import { CommonModule } from '@angular/common';
                                 {{ userName }}
                             </div>
 
-                            <span class="ds-icon--caret-down"></span>
+                            <qds-icon name="caret-down" />
                         </button>
 
                         <div
@@ -207,15 +206,15 @@ import { CommonModule } from '@angular/common';
                                     : toggleSubMenu(idx)
                             "
                         >
-                            <span
+                            <qds-icon
                                 *ngIf="subNavItem.icon"
-                                class="ds-icon--{{ subNavItem.icon }}"
-                            ></span>
+                                [name]="subNavItem.icon"
+                            />
                             {{ subNavItem.label }}
-                            <span
+                            <qds-icon
                                 *ngIf="subNavItem.subNav"
-                                class="ds-icon--caret-down"
-                            ></span>
+                                name="caret-down"
+                            />
                         </button>
 
                         <div
@@ -227,10 +226,10 @@ import { CommonModule } from '@angular/common';
                                 class="ds-header__dropdown-item"
                                 (click)="navigateTo(subSubNavItem.route)"
                             >
-                                <span
+                                <qds-icon
                                     *ngIf="subSubNavItem.icon"
-                                    class="ds-icon--{{ subSubNavItem.icon }}"
-                                ></span>
+                                    [name]="subSubNavItem.icon"
+                                />
                                 {{ subSubNavItem.label }}
                             </button>
                         </div>
@@ -331,7 +330,10 @@ export class QDSHeaderComponent implements AfterViewInit {
         window.location.href = route;
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

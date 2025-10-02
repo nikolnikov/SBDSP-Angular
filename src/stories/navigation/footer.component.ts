@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-footer',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <footer>
             <div
@@ -302,7 +305,10 @@ export class QDSFooterComponent implements AfterViewInit {
     year: number = new Date().getFullYear();
     showFooterLinks = false;
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

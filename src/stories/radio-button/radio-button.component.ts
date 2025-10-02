@@ -5,10 +5,14 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
     selector: 'qds-radio-group',
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, MatRadioModule],
     template: `
         <mat-radio-group
             class="ds-input__radio-group"
@@ -47,7 +51,10 @@ export class QDSRadioGroupComponent implements AfterViewInit {
         value: string;
     }[] = [];
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

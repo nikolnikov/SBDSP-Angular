@@ -1,30 +1,45 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    ElementRef,
+    Renderer2,
+    AfterViewInit,
+    OnInit
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormControl } from '@angular/forms';
-import { Observable, startWith, map } from 'rxjs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
     selector: 'qds-autocomplete',
     standalone: true,
     imports: [
         CommonModule,
-        FormsModule,
         ReactiveFormsModule,
-        MatAutocompleteModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatAutocompleteModule
     ],
     template: `
         <div class="ds-input__wrapper">
             <mat-form-field
                 class="ds-input"
                 [class]="customClasses"
-                [class.--error]="hasError"
-                [class.mat-form-field-disabled]="isDisabled"
+                [class.--disabled]="
+                    (formControlId && formControlId.disabled) || isDisabled
+                "
+                [class.--error]="
+                    (formControlId &&
+                        formControlId.invalid &&
+                        formControlId.touched) ||
+                    hasError
+                "
                 [class.--required]="isRequired"
                 [ngStyle]="{ 'max-width.px': maxWidth ? maxWidth : null }"
             >
@@ -64,13 +79,22 @@ import { Observable, startWith, map } from 'rxjs';
                 {{ hintMessage }}
             </div>
 
-            <div *ngIf="errorMessage && hasError" class="ds-input__error">
+            <div
+                *ngIf="
+                    (formControlId &&
+                        formControlId.invalid &&
+                        formControlId.touched) ||
+                    (hasError && errorMessage)
+                "
+                class="ds-input__error"
+            >
                 {{ errorMessage }}
             </div>
         </div>
-    `
+    `,
+    styles: [':host { display: block; }']
 })
-export class QDSAutocompleteComponent {
+export class QDSAutocompleteComponent implements OnInit, AfterViewInit {
     @Input() customClasses: string = '';
     @Input() formControlId: FormControl = new FormControl();
     @Input() errorMessage: string = '';
@@ -78,11 +102,11 @@ export class QDSAutocompleteComponent {
     @Input() hasError: boolean = false;
     @Input() hasIcon: boolean = false;
     @Input() inputId: string = '';
+    @Input() isDisabled: boolean = false;
+    @Input() isRequired: boolean = false;
     @Input() label: string = '';
     @Input() panelClasses: string = '';
     @Input() placeholder: string = '';
-    @Input() isDisabled: boolean = false;
-    @Input() isRequired: boolean = false;
     @Input() maxWidth: number = 0;
     @Input() options: any[] = [];
 
@@ -108,6 +132,18 @@ export class QDSAutocompleteComponent {
         const filterValue = value.toLowerCase();
         return this.options.filter(option =>
             option.toLowerCase().includes(filterValue)
+        );
+    }
+
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
+
+    ngAfterViewInit() {
+        const attrs = this.el.nativeElement.getAttributeNames();
+        attrs.forEach((attr: string) =>
+            this.renderer.removeAttribute(this.el.nativeElement, attr)
         );
     }
 }

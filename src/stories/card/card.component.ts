@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-card',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <div class="ds-card" [class]="customClasses">
             <div class="ds-card__content">
@@ -21,7 +24,10 @@ export class QDSCardComponent implements AfterViewInit {
     @Input() customClasses: string = '';
     @Input() title: string = '';
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

@@ -5,21 +5,14 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { QDSIconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'qds-nav-rail',
+    standalone: true,
+    imports: [CommonModule, QDSIconComponent],
     template: `
-        <header class="ds-header" *ngIf="!noHeader">
-            <div class="ds-grid --margins">
-                <a class="ds-brand-wrapper --md" href="/">
-                    <img
-                        src="https://ds.cdn.questdiagnostics.com/assets/img/qd-brand--horizontal--green.svg"
-                        alt="logo"
-                    />
-                </a>
-            </div>
-        </header>
-
         <div class="ds-navrail" [class.--no-header]="noHeader">
             <div class="ds-navrail__rail">
                 <ng-container *ngFor="let item of navItems; index as i">
@@ -39,10 +32,7 @@ import {
                             </ng-container>
                         </div>
 
-                        <span
-                            *ngIf="item.icon"
-                            class="ds-icon--{{ item.icon }}"
-                        ></span>
+                        <qds-icon *ngIf="item.icon" [name]="item.icon" />
 
                         <span class="ds-navrail__label">
                             {{ item.label }}
@@ -165,7 +155,10 @@ export class QDSNavRailComponent implements AfterViewInit {
         window.location.href = route;
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-icon',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <span
             [ngClass]="getIconClasses()"
@@ -43,7 +46,10 @@ export class QDSIconComponent implements AfterViewInit {
         return `ds-font-${this.size}`;
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

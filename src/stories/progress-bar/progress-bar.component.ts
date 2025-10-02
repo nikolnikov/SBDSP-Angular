@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-progress-bar',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <div class="ds-progressbar" [class]="customClasses" role="progressbar">
             <div

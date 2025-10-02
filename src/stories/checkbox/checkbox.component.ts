@@ -5,22 +5,25 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
     selector: 'qds-checkbox',
     standalone: true,
-    imports: [MatCheckboxModule],
+    imports: [CommonModule, ReactiveFormsModule, MatCheckboxModule],
     template: `
         <mat-checkbox
             class="ds-input__checkbox"
             [class]="customClasses"
             [class.mat-mdc-checkbox-checked]="isChecked"
             [class.mdc-checkbox--disabled]="
-                formControlId?.disabled || isDisabled
+                formControlId.disabled || isDisabled
             "
             [class.--required]="isRequired"
             [class.mat-checkbox-indeterminate]="isIndeterminate"
+            [formControl]="formControlId"
             [id]="inputId"
             [name]="name"
         >
@@ -29,6 +32,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     `
 })
 export class QDSCheckboxComponent implements AfterViewInit {
+    @Input() formControlId: FormControl = new FormControl();
     @Input() customClasses: string = '';
     @Input() inputId: string = '';
     @Input() isChecked: boolean = false;
@@ -38,7 +42,10 @@ export class QDSCheckboxComponent implements AfterViewInit {
     @Input() label: string = '';
     @Input() name: string = '';
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-badge',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <div
             class="ds-badge"

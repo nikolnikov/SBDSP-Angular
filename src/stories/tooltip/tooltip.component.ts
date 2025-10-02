@@ -6,10 +6,12 @@ import {
     Renderer2,
     ViewChild
 } from '@angular/core';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'qds-tooltip',
+    standalone: true,
+    imports: [MatTooltipModule],
     template: `
         <span
             #tooltip="matTooltip"
@@ -27,7 +29,10 @@ export class QDSTooltipComponent implements AfterViewInit {
     @ViewChild('tooltip', { static: true }) tooltip!: MatTooltip;
     @ViewChild('trigger', { static: true }) trigger!: ElementRef;
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

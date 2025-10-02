@@ -18,10 +18,10 @@ const meta: Meta<QDSButtonComponent> = {
         label: { control: 'text' },
         type: {
             control: 'radio',
-            options: ['primary', 'secondary', 'ghost'],
+            options: ['primary', 'secondary', 'ghost', 'option'],
             table: {
                 type: {
-                    summary: `'primary' | 'secondary' | 'ghost'`
+                    summary: `'primary' | 'secondary' | 'ghost' | 'option'`
                 },
                 defaultValue: { summary: 'primary' }
             }
@@ -195,5 +195,13 @@ export const CondensedGhostButton = {
         ...PrimaryButton.args,
         isCondensed: true,
         type: 'ghost'
+    }
+};
+
+export const OptionButton = {
+    args: {
+        ...PrimaryButton.args,
+        label: 'Option button with a longer label',
+        type: 'option'
     }
 };

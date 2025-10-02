@@ -1,12 +1,26 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    Output,
+    Renderer2
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { QDSIconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'qds-button',
+    standalone: true,
+    imports: [CommonModule, MatMenuModule, QDSIconComponent],
     template: `
         <button
             [ngClass]="getButtonClasses()"
             [attr.aria-label]="label"
             (click)="onClick($event)"
+            [matMenuTriggerFor]="matMenuTriggerFor"
             type="button"
         >
             <ng-container *ngIf="isSave; else normalButton">
@@ -37,14 +51,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                 </div>
             </ng-container>
             <ng-template #normalButton>
-                <span *ngIf="icon" class="ds-icon--{{ icon }}"></span>
+                <qds-icon *ngIf="icon" name="{{ icon }}" />
                 <span>{{ label }}</span>
-                <span *ngIf="iconRight" class="ds-icon--{{ iconRight }}"></span>
+                <qds-icon *ngIf="iconRight" name="{{ iconRight }}" />
             </ng-template>
         </button>
     `
 })
-export class QDSButtonComponent {
+export class QDSButtonComponent implements AfterViewInit {
     @Input() customClasses: string = '';
     @Input() icon: string = '';
     @Input() iconRight: string = '';
@@ -54,8 +68,9 @@ export class QDSButtonComponent {
     @Input() isInverse: boolean = false;
     @Input() isSave: boolean = false;
     @Input() label: string = '';
+    @Input() matMenuTriggerFor: any = null;
     @Input() size: 'sm' | 'lg' = 'lg';
-    @Input() type: 'primary' | 'secondary' | 'ghost' = 'primary';
+    @Input() type: 'primary' | 'secondary' | 'ghost' | 'option' = 'primary';
 
     @Output() clickHandler = new EventEmitter<Event>();
 
@@ -74,7 +89,9 @@ export class QDSButtonComponent {
 
     onClick(event: Event) {
         this.clickHandler.emit(event);
-        this.setSave();
+        if (this.isSave) {
+            this.setSave();
+        }
     }
 
     setSave() {
@@ -102,8 +119,11 @@ export class QDSButtonComponent {
             'ds-button': true,
             [this.customClasses]: !!this.customClasses,
             [`--${this.type}`]: !!this.type,
-            '--primary': this.type !== 'secondary' && this.type !== 'ghost',
-            [`--${this.size}`]: !!this.size,
+            '--primary':
+                this.type !== 'secondary' &&
+                this.type !== 'ghost' &&
+                this.type !== 'option',
+            [`--${this.size}`]: this.type !== 'option' && !!this.size,
             '--condensed': this.isCondensed,
             '--destructive': this.isDestructive,
             '--disabled': this.isDisabled,
@@ -112,5 +132,17 @@ export class QDSButtonComponent {
             '--saving': this.buttonStatus === 'saving',
             '--saved': this.buttonStatus === 'saved'
         };
+    }
+
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
+
+    ngAfterViewInit() {
+        const attrs = this.el.nativeElement.getAttributeNames();
+        attrs.forEach((attr: string) =>
+            this.renderer.removeAttribute(this.el.nativeElement, attr)
+        );
     }
 }

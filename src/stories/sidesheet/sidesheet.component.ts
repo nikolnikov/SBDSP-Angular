@@ -7,47 +7,46 @@ import {
     Output,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { QDSIconButtonComponent } from '../button/icon-button.component';
+import { QDSOverlayComponent } from '../overlay/overlay.component';
 
 @Component({
     selector: 'qds-sidesheet',
+    standalone: true,
+    imports: [CommonModule, QDSIconButtonComponent, QDSOverlayComponent],
     template: `
         <div
             class="ds-sidesheet"
-            [ngClass]="{ '--opened': toggleSidesheet }"
+            [ngClass]="{ '--opened': toggleSidesheet, '--chatbot': isChatbot }"
             (scroll)="onSidesheetScroll($event)"
         >
-            <div class="ds-sidesheet__header">
+            <div class="ds-sidesheet__header" *ngIf="!isChatbot">
                 <span *ngIf="title">{{ title }}</span>
 
-                <button
-                    class="ds-button --icon"
-                    aria-label="close"
-                    (click)="closeSidesheet()"
-                >
-                    <span class="ds-icon--close"></span>
-                </button>
+                <qds-icon-button
+                    icon="close"
+                    (clickHandler)="closeSidesheet()"
+                />
             </div>
 
-            <div class="ds-sidesheet__content">
+            <div [ngClass]="{ 'ds-sidesheet__content': !isChatbot }">
                 <ng-content></ng-content>
             </div>
         </div>
 
-        <div
-            class="ds-overlay"
-            [class]="customClasses"
-            [ngClass]="{ '--opened': toggleSidesheet }"
-            (click)="closeSidesheet()"
-        ></div>
+        <qds-overlay
+            [isOpen]="toggleSidesheet"
+            (clickHandler)="closeSidesheet()"
+        />
     `
 })
 export class QDSSidesheetComponent implements AfterViewInit {
     @Input() customClasses: string = '';
+    @Input() isChatbot: boolean = false;
     @Input() title: string = '';
     @Input() toggleSidesheet: boolean = false;
     @Output() openSidesheet = new EventEmitter<boolean>();
-
-    openSidehseet: boolean = false;
 
     closeSidesheet() {
         this.toggleSidesheet = !this.toggleSidesheet;
@@ -55,31 +54,27 @@ export class QDSSidesheetComponent implements AfterViewInit {
     }
 
     onSidesheetScroll(event: Event) {
-        const elem = event.currentTarget as HTMLElement;
+        const container = event.currentTarget as HTMLElement | null;
+        if (!container) return;
 
-        if (!elem) {
-            return;
-        }
-
-        const dsSidesheet = document.querySelector('.ds-sidesheet');
-        const dsSidesheetHeader = document.querySelector(
+        const header: HTMLElement | null = this.el.nativeElement.querySelector(
             '.ds-sidesheet__header'
         );
 
-        if (dsSidesheet) {
-            dsSidesheet.addEventListener('scroll', function () {
-                const sidesheetScrollTop = elem.scrollTop;
+        if (!header) return;
 
-                if (sidesheetScrollTop > 0) {
-                    dsSidesheetHeader?.classList.add('--scrolled');
-                } else {
-                    dsSidesheetHeader?.classList.remove('--scrolled');
-                }
-            });
+        const scrollTop = container.scrollTop;
+        if (scrollTop > 0) {
+            this.renderer.addClass(header, '--scrolled');
+        } else {
+            this.renderer.removeClass(header, '--scrolled');
         }
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

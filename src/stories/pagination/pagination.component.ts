@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
     selector: 'qds-pagination',
+    standalone: true,
+    imports: [MatPaginatorModule],
     template: `
         <mat-paginator
             class="ds-pagination"
@@ -25,7 +28,10 @@ export class QDSPaginationComponent implements AfterViewInit {
     @Input() pageSize: string = '10';
     @Input() pageSizeOptions: any[] = [];
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

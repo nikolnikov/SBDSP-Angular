@@ -7,16 +7,27 @@ import {
     Renderer2,
     AfterViewInit
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { QDSIconComponent } from '../icon/icon.component';
+import { QDSLinkComponent } from '../link/link.component';
+import { QDSIconButtonComponent } from '../button/icon-button.component';
 
 @Component({
     selector: 'qds-message',
+    standalone: true,
+    imports: [
+        CommonModule,
+        QDSIconComponent,
+        QDSLinkComponent,
+        QDSIconButtonComponent
+    ],
     template: `
         <div
             [ngClass]="['ds-message', '--' + type, customClasses]"
             role="alert"
         >
             <div *ngIf="!noIcon" class="ds-message__icon">
-                <span [ngClass]="'ds-icon--' + getIconName()"></span>
+                <qds-icon [name]="getIconName()" />
             </div>
 
             <div class="ds-message__content">
@@ -25,20 +36,20 @@ import {
                 {{ message }}
 
                 <div *ngIf="actions.length > 0" class="ds-message__actions">
-                    <a
-                        class="ds-link"
-                        href="action.action"
+                    <qds-link
                         *ngFor="let action of actions; let i = index"
-                    >
-                        {{ action.label }}
-                    </a>
+                        [url]="action.action"
+                        [label]="action.label"
+                    />
                 </div>
             </div>
 
             <div *ngIf="!hideX" class="ds-message__close">
-                <button class="ds-button --icon --md" (click)="onClose()">
-                    <span class="ds-icon--close"></span>
-                </button>
+                <qds-icon-button
+                    icon="close"
+                    (clickHandler)="onClose()"
+                    size="md"
+                ></qds-icon-button>
             </div>
         </div>
     `

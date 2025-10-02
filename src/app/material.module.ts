@@ -29,8 +29,9 @@ import { QDSButtonComponent } from '../stories/button/button.component';
 import { QDSHeaderComponent } from '../stories/navigation/header.component';
 
 @NgModule({
-    declarations: [QDSButtonComponent, QDSHeaderComponent],
     imports: [
+        QDSButtonComponent,
+        QDSHeaderComponent,
         CdkTableModule,
         CommonModule,
         MatAutocompleteModule,

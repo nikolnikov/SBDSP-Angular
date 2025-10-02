@@ -5,9 +5,13 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { QDSIconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'qds-link',
+    standalone: true,
+    imports: [CommonModule, QDSIconComponent],
     template: `
         <a
             class="ds-link"
@@ -18,17 +22,16 @@ import {
             [href]="url"
             [target]="newWindow ? '_blank' : '_self'"
         >
-            <span *ngIf="iconLeft" class="ds-icon--{{ iconLeft }}"></span>
+            <qds-icon *ngIf="iconLeft" name="{{ iconLeft }}" />
 
             <ng-container *ngIf="iconLeft || iconRight; else noIcon">
                 <span>{{ label }}</span>
             </ng-container>
-
             <ng-template #noIcon>
                 {{ label }}
             </ng-template>
 
-            <span *ngIf="iconRight" class="ds-icon--{{ iconRight }}"></span>
+            <qds-icon *ngIf="iconRight" name="{{ iconRight }}" />
         </a>
     `
 })
@@ -42,7 +45,10 @@ export class QDSLinkComponent implements AfterViewInit {
     @Input() newWindow: boolean = false;
     @Input() url: string = '';
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

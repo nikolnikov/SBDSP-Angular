@@ -7,9 +7,12 @@ import {
     Output,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-avatar',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <ng-container *ngIf="isButton; else divTemplate">
             <button
@@ -59,7 +62,10 @@ export class QDSAvatarComponent implements AfterViewInit {
         return `--${this.size}`;
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

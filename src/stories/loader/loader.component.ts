@@ -5,9 +5,13 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'qds-loader',
+    standalone: true,
+    imports: [CommonModule, MatProgressSpinnerModule],
     template: `
         <mat-spinner
             class="ds-loading"

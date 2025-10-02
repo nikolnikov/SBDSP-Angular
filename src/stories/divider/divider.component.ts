@@ -5,9 +5,12 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-divider',
+    standalone: true,
+    imports: [CommonModule],
     template: ` <hr [class]="customClasses" [ngClass]="getColor()" /> `
 })
 export class QDSDividerComponent implements AfterViewInit {
@@ -18,7 +21,10 @@ export class QDSDividerComponent implements AfterViewInit {
         return this.color ? `ds-${this.color}--bg` : '';
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

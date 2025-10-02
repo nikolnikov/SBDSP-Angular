@@ -2,12 +2,17 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
+    EventEmitter,
     Input,
+    Output,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'qds-tag',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <button
             class="ds-tag"
@@ -15,33 +20,48 @@ import {
             [class.--secondary]="isSecondary"
             [class.--disabled]="isDisabled"
             [class.--selected]="isSelected"
-            (click)="onTagClick()"
+            (click)="handleClick($event)"
             [attr.aria-label]="label"
         >
             {{ label }}
 
-            <span *ngIf="showClose" class="ds-icon--close"></span>
+            <span
+                *ngIf="showClose"
+                class="ds-icon--close"
+                role="button"
+                aria-label="Dismiss"
+                (click)="handleHide($event)"
+            ></span>
         </button>
     `
 })
 export class QDSTagComponent implements AfterViewInit {
-    @Input() clickHandler: () => void = () => {};
     @Input() customClasses: string = '';
+
     @Input() isDisabled: boolean = false;
     @Input() isSecondary: boolean = false;
     @Input() label: string = '';
     @Input() showClose: boolean = false;
 
-    isSelected: boolean = false;
+    @Output() clickHandler = new EventEmitter<MouseEvent>();
+    @Output() hideHandler = new EventEmitter<MouseEvent>();
 
-    onTagClick() {
-        if (this.isDisabled) {
-            return;
+    handleClick(event: MouseEvent): void {
+        if (!this.isDisabled) {
+            this.isSelected = !this.isSelected;
+            this.clickHandler.emit(event);
         }
-
-        this.isSelected = !this.isSelected;
-        this.clickHandler();
     }
+
+    handleHide(event: MouseEvent): void {
+        event.stopPropagation();
+        if (!this.isDisabled) {
+            this.isSelected = !this.isSelected;
+            this.hideHandler.emit(event);
+        }
+    }
+
+    isSelected: boolean = false;
 
     constructor(
         private el: ElementRef,

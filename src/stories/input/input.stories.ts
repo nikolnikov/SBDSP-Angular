@@ -8,8 +8,7 @@ const meta: Meta<QDSInputComponent> = {
     component: QDSInputComponent,
     decorators: [
         moduleMetadata({
-            declarations: [QDSLoaderComponent],
-            imports: [MaterialModule]
+            imports: [MaterialModule, QDSLoaderComponent]
         })
     ],
     parameters: {

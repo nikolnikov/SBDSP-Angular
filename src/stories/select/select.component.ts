@@ -5,9 +5,24 @@ import {
     Input,
     Renderer2
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { QDSIconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'qds-input-select',
+    standalone: true,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatTooltipModule,
+        QDSIconComponent
+    ],
     template: `
         <div class="ds-input__wrapper">
             <ng-container *ngIf="isMultiple; else singleSelect">
@@ -28,15 +43,15 @@ import {
                             matTooltip="{{ tooltip }}"
                             matTooltipPosition="above"
                         >
-                            <span class="ds-icon--info"></span>
+                            <qds-icon name="info" />
                         </button>
                     </mat-label>
 
                     <mat-select
-                        #multiSelectInstance
                         placeholder="{{ placeholder }}"
                         disableOptionCentering
                         [panelClass]="'ds-dropdown ' + panelClasses"
+                        [formControl]="formControlId"
                         [id]="inputId"
                         [required]="isRequired"
                         (selectionChange)="onChange($event)"
@@ -47,7 +62,7 @@ import {
                                 <span
                                     class="ds-dropdown__selected"
                                     *ngFor="
-                                        let item of multiSelectInstance.value
+                                        let item of formControlId.value
                                             | slice: 0 : 2
                                     "
                                 >
@@ -57,13 +72,9 @@ import {
 
                             <span
                                 class="ds-dropdown__selected-plus"
-                                *ngIf="
-                                    (multiSelectInstance.value?.length || 0) > 2
-                                "
+                                *ngIf="(formControlId.value?.length || 0) > 2"
                             >
-                                +{{
-                                    (multiSelectInstance.value?.length || 0) - 2
-                                }}
+                                +{{ (formControlId.value?.length || 0) - 2 }}
                             </span>
                         </mat-select-trigger>
 
@@ -95,14 +106,15 @@ import {
                             matTooltip="{{ tooltip }}"
                             matTooltipPosition="above"
                         >
-                            <span class="ds-icon--info"></span>
+                            <qds-icon name="info" />
                         </button>
                     </mat-label>
 
                     <mat-select
                         [panelClass]="'ds-dropdown ' + panelClasses"
-                        disableOptionCentering
+                        [disableOptionCentering]="true"
                         placeholder="{{ placeholder }}"
+                        [formControl]="formControlId"
                         [id]="inputId"
                         [required]="isRequired"
                         (selectionChange)="onChange($event)"
@@ -118,11 +130,18 @@ import {
                 </mat-form-field>
             </ng-template>
 
-            <div *ngIf="hintMessage && !errorMessage" class="ds-input__hint">
+            <div *ngIf="hintMessage" class="ds-input__hint">
                 {{ hintMessage }}
             </div>
 
-            <div *ngIf="hasError && errorMessage" class="ds-input__error">
+            <div
+                *ngIf="
+                    formControlId &&
+                    formControlId.invalid &&
+                    formControlId.touched
+                "
+                class="ds-input__error"
+            >
                 {{ errorMessage }}
             </div>
         </div>
@@ -131,10 +150,11 @@ import {
 export class QDSInputSelectComponent implements AfterViewInit {
     @Input() customClasses: string = '';
     @Input() errorMessage: string = '';
+    @Input() formControlId: FormControl = new FormControl();
+    @Input() isDisabled: boolean = false;
     @Input() hasError: boolean = false;
     @Input() hintMessage: string = '';
     @Input() inputId: string = '';
-    @Input() isDisabled: boolean = false;
     @Input() isMultiple: boolean = false;
     @Input() isRequired: boolean = false;
     @Input() label: string = '';
