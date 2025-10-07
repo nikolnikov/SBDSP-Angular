@@ -75,6 +75,7 @@ export const Chatbot = {
         askInputPlaceholder: 'Ask anything',
         suggestionQuestions: demoSuggestionOptions,
         responses: demoResponses,
+        responseLoadingDelay: 2000,
         feedbackOptions: demoFeedbackOptions
     },
     argTypes: {
@@ -89,6 +90,7 @@ export const Chatbot = {
         isRestarted: { table: { disable: true } },
         onClose: { table: { disable: true } },
         restart: { table: { disable: true } },
+        responseLoadingDelay: { table: { disable: true } },
         thumbsDownHandler: { table: { disable: true } },
         thumbsUpHandler: { table: { disable: true } }
     }

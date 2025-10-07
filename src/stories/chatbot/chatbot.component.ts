@@ -407,6 +407,7 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
     @Input() introTitle: string = '';
     @Input() introMessage: string = '';
     @Input() responses: ChatbotResponseItem[] = [];
+    @Input() responseLoadingDelay: number = 0;
     @Input() suggestionQuestions: ChatbotSuggestion[] = [];
     @Input() thumbsDownHandler?: (turn: ChatbotTurn) => void;
     @Input() thumbsUpHandler?: (turn: ChatbotTurn) => void;
@@ -464,12 +465,13 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
         } else {
             this.conversation.forEach(turn => {
                 if (turn?.id && !this.visibleResponses[turn.id]) {
+                    // Use configurable delay
                     setTimeout(() => {
                         this.visibleResponses = {
                             ...this.visibleResponses,
                             [turn.id]: true
                         };
-                    }, 2000);
+                    }, this.responseLoadingDelay);
                 }
             });
         }
@@ -694,13 +696,16 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
     }
 
     // Helper to mark a turn's response visible after a delay (spinner phase)
-    private showResponseWithDelay(id: string, delay: number = 2000) {
+    private showResponseWithDelay(id: string, delay?: number) {
         // Avoid scheduling twice if already visible
         if (this.visibleResponses[id]) return;
+        const effectiveDelay =
+            typeof delay === 'number' ? delay : this.responseLoadingDelay;
+        const safeDelay = effectiveDelay >= 0 ? effectiveDelay : 0;
         setTimeout(() => {
             this.visibleResponses = { ...this.visibleResponses, [id]: true };
             this.scrollToBottom();
-        }, delay);
+        }, safeDelay);
     }
 
     // Ensure the content area stays scrolled to the latest message
