@@ -15,6 +15,8 @@ import { QDSIconButtonComponent } from '../button/icon-button.component';
 import { QDSButtonComponent } from '../button/button.component';
 import { QDSSidesheetComponent } from '../sidesheet/sidesheet.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { QDSToastComponent } from '../toast/toast.component';
 
 export interface ChatbotFeedbackOption {
     id?: string;
@@ -50,7 +52,9 @@ export interface ChatbotTurn {
         QDSIconButtonComponent,
         QDSButtonComponent,
         QDSSidesheetComponent,
-        MatTooltipModule
+        MatTooltipModule,
+        MatSnackBarModule,
+        QDSToastComponent
     ],
     template: `
         <qds-sidesheet
@@ -107,6 +111,7 @@ export interface ChatbotTurn {
                 <!-- Content -->
                 <div
                     class="ds-chatbot__content"
+                    #chatbotContentRef
                     (scroll)="onChatbotScroll($event)"
                 >
                     <!-- Intro / Suggestions -->
@@ -130,7 +135,6 @@ export interface ChatbotTurn {
                                 class="ds-mt-16 ds-flex --row --wrap --end-center"
                             >
                                 <qds-button
-                                    customClasses="ds-mr-16"
                                     (clickHandler)="handleClose()"
                                     label="Cancel"
                                     size="sm"
@@ -208,7 +212,7 @@ export interface ChatbotTurn {
                                     <div class="ds-chatbot__response-actions">
                                         <button
                                             *ngIf="!copiedByTurn[turn.id]"
-                                            class="ds-button --icon --sm"
+                                            class="ds-button --icon --md"
                                             matTooltip="Copy"
                                             aria-label="copy"
                                             (click)="
@@ -223,7 +227,7 @@ export interface ChatbotTurn {
 
                                         <button
                                             *ngIf="copiedByTurn[turn.id]"
-                                            class="ds-button --icon --sm"
+                                            class="ds-button --icon --md"
                                             matTooltip="Copied"
                                             aria-label="copied"
                                             (click)="noop()"
@@ -232,35 +236,39 @@ export interface ChatbotTurn {
                                         </button>
 
                                         <button
-                                            class="ds-button --icon --sm"
-                                            [ngClass]="{
-                                                '--active':
-                                                    activeThumbs[turn.id] ===
-                                                    'up'
-                                            }"
+                                            class="ds-button --icon --md"
                                             matTooltip="Good response"
                                             aria-label="thumbs-up"
                                             (click)="onThumbUp(turn)"
                                         >
-                                            <qds-icon name="thumbs-up" />
+                                            <qds-icon
+                                                [name]="
+                                                    activeThumbs[turn.id] ===
+                                                    'up'
+                                                        ? 'thumbs-up-filled'
+                                                        : 'thumbs-up'
+                                                "
+                                            />
                                         </button>
 
                                         <button
-                                            class="ds-button --icon --sm"
-                                            [ngClass]="{
-                                                '--active':
-                                                    activeThumbs[turn.id] ===
-                                                    'down'
-                                            }"
+                                            class="ds-button --icon --md"
                                             matTooltip="Bad response"
                                             aria-label="thumbs-down"
                                             (click)="onThumbDown(turn)"
                                         >
-                                            <qds-icon name="thumbs-down" />
+                                            <qds-icon
+                                                [name]="
+                                                    activeThumbs[turn.id] ===
+                                                    'down'
+                                                        ? 'thumbs-down-filled'
+                                                        : 'thumbs-down'
+                                                "
+                                            />
                                         </button>
 
                                         <button
-                                            class="ds-button --icon --sm"
+                                            class="ds-button --icon --md"
                                             matTooltip="Try again"
                                             (click)="handleRetry(turn)"
                                             aria-label="retry"
@@ -409,6 +417,8 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
     @Output() onRetry = new EventEmitter<ChatbotTurn>();
 
     @ViewChild('chatbotRef') chatbotRef?: ElementRef<HTMLDivElement>;
+    @ViewChild('chatbotContentRef')
+    chatbotContentRef?: ElementRef<HTMLDivElement>;
 
     // Local UI state
     openChatbotSidesheet = false; // moved from (incorrect) file-level scope
@@ -429,7 +439,8 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
 
     constructor(
         private el: ElementRef,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private toast: MatSnackBar
     ) {}
 
     ngAfterViewInit(): void {
@@ -494,6 +505,7 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
             ];
             this.internalInputValue = '';
             this.showResponseWithDelay(id);
+            this.scrollToBottom();
         }
         if (this.askInputSubmitHandler) {
             this.askInputSubmitHandler();
@@ -517,6 +529,7 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
             { id, question: q, option: payload.option }
         ];
         this.showResponseWithDelay(id);
+        this.scrollToBottom();
         // Execute optional action on suggestion
         if (payload.option?.action) {
             try {
@@ -595,11 +608,33 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
         if (!id) return;
         const next = this.activeThumbs[id] === 'down' ? null : 'down';
         this.activeThumbs = { ...this.activeThumbs, [id]: next } as any;
-        this.feedbackVisibility = {
-            ...this.feedbackVisibility,
-            [id]: next === 'down'
-        };
+
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+            // On mobile: never show inline feedback panel. Instead, toast on activation.
+            this.feedbackVisibility = {
+                ...this.feedbackVisibility,
+                [id]: false
+            };
+            if (next === 'down') {
+                this.showFeedbackToast();
+            }
+        } else {
+            this.feedbackVisibility = {
+                ...this.feedbackVisibility,
+                [id]: next === 'down'
+            };
+        }
         this.thumbsDownHandler && this.thumbsDownHandler(turn);
+    }
+
+    private showFeedbackToast() {
+        this.toast.openFromComponent(QDSToastComponent, {
+            panelClass: ['ds-toast', '--success'],
+            duration: 5000,
+            verticalPosition: 'top',
+            data: { message: 'Thanks for providing feedback' }
+        });
     }
 
     onFeedback(opt: any) {
@@ -664,6 +699,19 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
         if (this.visibleResponses[id]) return;
         setTimeout(() => {
             this.visibleResponses = { ...this.visibleResponses, [id]: true };
+            this.scrollToBottom();
         }, delay);
+    }
+
+    // Ensure the content area stays scrolled to the latest message
+    private scrollToBottom() {
+        // Allow DOM to paint new content before measuring
+        requestAnimationFrame(() => {
+            const el = this.chatbotContentRef?.nativeElement;
+            if (!el) return;
+            el.scrollTop = el.scrollHeight;
+            // Update scrolled state (always true when content exceeds height)
+            this.isScrolled = el.scrollTop > 0;
+        });
     }
 }
