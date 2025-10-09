@@ -1,12 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { QDSModalComponent } from './modal.component';
 import { Component, Input } from '@angular/core';
-import {
-    MatDialog,
-    MatDialogModule,
-    MatDialogRef,
-    MAT_DIALOG_DATA
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 
@@ -56,8 +51,13 @@ const meta: Meta<ModalTriggerComponent> = {
     component: ModalTriggerComponent,
     decorators: [
         moduleMetadata({
-            declarations: [ModalTriggerComponent, QDSModalComponent],
-            imports: [CommonModule, MatDialogModule, BrowserAnimationsModule]
+            imports: [
+                CommonModule,
+                MatDialogModule,
+                ModalTriggerComponent,
+                QDSModalComponent,
+                BrowserAnimationsModule
+            ]
         })
     ],
     parameters: {

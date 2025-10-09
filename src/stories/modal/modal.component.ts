@@ -5,18 +5,11 @@ import {
     MatDialogRef,
     MatDialogModule
 } from '@angular/material/dialog';
-import { QDSIconButtonComponent } from '../button/icon-button.component';
-import { QDSButtonComponent } from '../button/button.component';
 
 @Component({
     selector: 'qds-modal',
     standalone: true,
-    imports: [
-        CommonModule,
-        MatDialogModule,
-        QDSIconButtonComponent,
-        QDSButtonComponent
-    ],
+    imports: [CommonModule, MatDialogModule],
     template: `
         <div
             [class.--alert]="type === 'alert'"
@@ -29,12 +22,13 @@ import { QDSButtonComponent } from '../button/button.component';
             <div mat-dialog-header class="ds-modal__header">
                 <h1 *ngIf="title">{{ title }}</h1>
 
-                <qds-icon-button
+                <button
+                    class="ds-button --icon --md"
                     *ngIf="!hideX"
-                    icon="close"
-                    (clickHandler)="onClose()"
-                    size="md"
-                />
+                    (click)="onClose()"
+                >
+                    <span class="ds-icon--close" aria-label="Close"></span>
+                </button>
             </div>
 
             <div mat-dialog-content class="ds-modal__content">
@@ -42,27 +36,30 @@ import { QDSButtonComponent } from '../button/button.component';
             </div>
 
             <div mat-dialog-actions class="ds-modal__actions">
-                <qds-button
+                <button
+                    class="ds-button --ghost"
                     *ngIf="ghostButtonLabel"
-                    label="{{ ghostButtonLabel }}"
-                    (clickHandler)="onGhostButtonClick()"
-                    type="ghost"
-                />
+                    (click)="onGhostButtonClick()"
+                >
+                    {{ ghostButtonLabel }}
+                </button>
 
                 <div class="ds-modal__actions-right">
-                    <qds-button
+                    <button
+                        class="ds-button --secondary"
                         *ngIf="secondaryButtonLabel"
-                        label="{{ secondaryButtonLabel }}"
-                        (clickHandler)="onSecondaryButtonClick()"
-                        type="secondary"
-                    />
+                        (click)="onSecondaryButtonClick()"
+                    >
+                        {{ secondaryButtonLabel }}
+                    </button>
 
-                    <qds-button
+                    <button
+                        class="ds-button --primary"
                         *ngIf="buttonLabel"
-                        label="{{ buttonLabel }}"
-                        (clickHandler)="onPrimaryButtonClick()"
-                        type="primary"
-                    />
+                        (click)="onPrimaryButtonClick()"
+                    >
+                        {{ buttonLabel }}
+                    </button>
                 </div>
             </div>
         </div>
@@ -85,17 +82,14 @@ export class QDSModalComponent implements AfterViewInit {
     }
 
     onPrimaryButtonClick() {
-        this.buttonHandler();
         this.dialogRef.close();
     }
 
     onSecondaryButtonClick() {
-        this.secondaryButtonHandler();
         this.dialogRef.close();
     }
 
     onGhostButtonClick() {
-        this.ghostButtonHandler();
         this.dialogRef.close();
     }
 

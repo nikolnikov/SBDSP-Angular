@@ -10,7 +10,6 @@ const meta: Meta<QDSDatepickerComponent> = {
     component: QDSDatepickerComponent,
     decorators: [
         moduleMetadata({
-            declarations: [QDSDatepickerComponent],
             imports: [
                 MatDatepickerModule,
                 MatFormFieldModule,

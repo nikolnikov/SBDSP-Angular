@@ -8,7 +8,7 @@ const meta: Meta<QDSSidesheetComponent> = {
     component: QDSSidesheetComponent,
     decorators: [
         moduleMetadata({
-            declarations: [QDSButtonComponent]
+            imports: [QDSButtonComponent]
         })
     ],
     parameters: {
@@ -134,5 +134,7 @@ const meta: Meta<QDSSidesheetComponent> = {
 export default meta;
 
 export const DefaultSidesheet = {
-    args: {}
+    args: {
+        title: 'Side sheet title'
+    }
 };

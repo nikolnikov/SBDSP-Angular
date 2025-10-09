@@ -10,8 +10,11 @@ const meta: Meta<QDSTableComponent> = {
     component: QDSTableComponent,
     decorators: [
         moduleMetadata({
-            declarations: [QDSIconButtonComponent],
-            imports: [MaterialModule, QDSContextualMenuComponent]
+            imports: [
+                MaterialModule,
+                QDSContextualMenuComponent,
+                QDSIconButtonComponent
+            ]
         })
     ],
     parameters: {

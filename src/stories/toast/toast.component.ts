@@ -12,12 +12,11 @@ import {
     MatSnackBarRef,
     MatSnackBarModule
 } from '@angular/material/snack-bar';
-import { QDSIconButtonComponent } from '../button/icon-button.component';
 
 @Component({
     selector: 'qds-toast',
     standalone: true,
-    imports: [CommonModule, MatSnackBarModule, QDSIconButtonComponent],
+    imports: [CommonModule, MatSnackBarModule],
     template: `
         <div
             class="ds-toast__content"
@@ -29,16 +28,22 @@ import { QDSIconButtonComponent } from '../button/icon-button.component';
             </span>
 
             <span *ngIf="!hideDismiss" matSnackBarActions>
-                <a *ngIf="textLinkLabel" class="ds-link" (click)="onClose()">
+                <span
+                    *ngIf="textLinkLabel"
+                    class="ds-link"
+                    (click)="onClose()"
+                    role="button"
+                >
                     {{ textLinkLabel }}
-                </a>
+                </span>
 
-                <qds-icon-button
+                <button
+                    class="ds-button --icon --md"
                     *ngIf="!textLinkLabel"
-                    icon="close"
-                    (clickHandler)="onClose()"
-                    size="md"
-                />
+                    (click)="onClose()"
+                >
+                    <span class="ds-icon--close" aria-label="Close"></span>
+                </button>
             </span>
         </div>
     `

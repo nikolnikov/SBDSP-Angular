@@ -1,12 +1,7 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { QDSToastComponent } from './toast.component';
 import { Component, Input } from '@angular/core';
-import {
-    MAT_SNACK_BAR_DATA,
-    MatSnackBar,
-    MatSnackBarModule,
-    MatSnackBarRef
-} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 
@@ -52,8 +47,13 @@ const meta: Meta<ToastTriggerComponent> = {
     component: ToastTriggerComponent,
     decorators: [
         moduleMetadata({
-            declarations: [ToastTriggerComponent, QDSToastComponent],
-            imports: [CommonModule, MatSnackBarModule, BrowserAnimationsModule]
+            imports: [
+                CommonModule,
+                MatSnackBarModule,
+                BrowserAnimationsModule,
+                ToastTriggerComponent,
+                QDSToastComponent
+            ]
         })
     ],
     parameters: {

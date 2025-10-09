@@ -74,6 +74,7 @@ story--components-divider--default-divider--primary-inner,
 [id*="story--components-navigation-header"] > *,
 .ds-header,
 story--components-progress-bar--default-progress-bar--primary-inner,
+story--components-progress-indicator-progress-bar--default-progress-bar--primary-inner,
 [id*="story--components-progress-stepper"] > * {
     width: 100% !important;
 }

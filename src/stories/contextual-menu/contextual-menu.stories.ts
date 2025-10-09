@@ -9,8 +9,7 @@ const meta: Meta<QDSContextualMenuComponent> = {
     component: QDSContextualMenuComponent,
     decorators: [
         moduleMetadata({
-            declarations: [QDSIconButtonComponent],
-            imports: [MatMenuTrigger]
+            imports: [MatMenuTrigger, QDSIconButtonComponent]
         })
     ],
     parameters: {

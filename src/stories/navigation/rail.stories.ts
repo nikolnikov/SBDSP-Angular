@@ -29,8 +29,7 @@ const meta: Meta<QDSNavRailComponent> = {
                 type: 'boolean'
             },
             table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
+                disable: true
             }
         }
     }
@@ -97,14 +96,6 @@ const navItems = [
 ];
 
 export const BasicRail = {
-    args: {
-        navItems: navItems,
-        noHeader: false
-    },
-    argTypes: {}
-};
-
-export const RailWithNoHeader = {
     args: {
         navItems: navItems,
         noHeader: true
