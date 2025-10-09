@@ -5,7 +5,8 @@ import {
     EventEmitter,
     Input,
     Output,
-    Renderer2
+    Renderer2,
+    Injectable
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +33,7 @@ export const QDS_US_DATE_FORMATS = {
 };
 
 // Custom adapter that ensures zero-padded month/day for 'input' display format
+@Injectable()
 class QDSNativeDateAdapter extends NativeDateAdapter {
     override format(date: Date, displayFormat: any): string {
         // Ensure only the input token gets full mm/dd/yyyy with leading zeros
