@@ -12,7 +12,68 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import {
+    MatNativeDateModule,
+    MAT_DATE_FORMATS,
+    DateAdapter,
+    NativeDateAdapter
+} from '@angular/material/core';
+
+// Custom US date format: mm/dd/yyyy
+export const QDS_US_DATE_FORMATS = {
+    parse: { dateInput: 'input' },
+    display: {
+        dateInput: 'input',
+        // Use object form so NativeDateAdapter treats it distinctly (prevents accidental reuse of 'input')
+        monthYearLabel: { year: 'numeric', month: 'short' },
+        dateA11yLabel: 'MM/dd/yyyy',
+        monthYearA11yLabel: 'MMMM yyyy'
+    }
+};
+
+// Custom adapter that ensures zero-padded month/day for 'input' display format
+class QDSNativeDateAdapter extends NativeDateAdapter {
+    override format(date: Date, displayFormat: any): string {
+        // Ensure only the input token gets full mm/dd/yyyy with leading zeros
+        if (displayFormat === 'input') {
+            const mm = this._to2(date.getMonth() + 1);
+            const dd = this._to2(date.getDate());
+            const yyyy = date.getFullYear();
+            return `${mm}/${dd}/${yyyy}`;
+        }
+        // Allow the month/year label object format to pass through to native logic (e.g., 'Oct 2025')
+        return super.format(date, displayFormat);
+    }
+
+    override parse(value: any): Date | null {
+        if (typeof value === 'string' && value.includes('/')) {
+            const parts = value.split('/').map(p => p.trim());
+            if (parts.length === 3) {
+                const [mm, dd, yyyy] = parts;
+                const month = Number(mm) - 1;
+                const day = Number(dd);
+                const year = Number(yyyy);
+                if (
+                    !isNaN(month) &&
+                    !isNaN(day) &&
+                    !isNaN(year) &&
+                    month >= 0 &&
+                    month < 12 &&
+                    day > 0 &&
+                    day <= 31
+                ) {
+                    const d = new Date(year, month, day);
+                    if (!isNaN(d.getTime())) return d;
+                }
+            }
+        }
+        return super.parse(value);
+    }
+
+    private _to2(v: number): string {
+        return v < 10 ? `0${v}` : `${v}`;
+    }
+}
 
 @Component({
     selector: 'qds-datepicker',
@@ -172,7 +233,11 @@ import { MatNativeDateModule } from '@angular/material/core';
                 {{ errorMessage }}
             </div>
         </ng-template>
-    `
+    `,
+    providers: [
+        { provide: MAT_DATE_FORMATS, useValue: QDS_US_DATE_FORMATS },
+        { provide: DateAdapter, useClass: QDSNativeDateAdapter }
+    ]
 })
 export class QDSDatepickerComponent implements AfterViewInit {
     @Input() customClasses: string = '';
