@@ -78,6 +78,7 @@ import { QDSIconButtonComponent } from '../button/icon-button.component';
                                 let breadcrumb of getMiddleBreadcrumbs();
                                 let i = index
                             "
+                            mat-menu-item
                             class="ds-menu__item"
                             (click)="handleMenuItemClick(breadcrumb)"
                         >

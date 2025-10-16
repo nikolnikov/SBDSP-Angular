@@ -4,7 +4,6 @@ import {
     ElementRef,
     EventEmitter,
     Input,
-    OnChanges,
     Output,
     Renderer2,
     ViewChild
@@ -202,14 +201,26 @@ export interface ChatbotTurn {
                                     <div class="ds-loading-data"></div>
                                 </ng-container>
                                 <ng-template #responseBlock>
-                                    {{ getPrimary(turn, idx) }}
+                                    <span>{{ typingText[turn.id] || '' }}</span>
                                     <div
-                                        *ngIf="getFollowup(idx)"
+                                        *ngIf="
+                                            getFollowup(idx) &&
+                                            typingComplete[turn.id]
+                                        "
                                         class="ds-chatbot__response-followup"
                                     >
-                                        {{ getFollowup(idx) }}
+                                        <span>{{
+                                            followupTypingText[turn.id] || ''
+                                        }}</span>
                                     </div>
-                                    <div class="ds-chatbot__response-actions">
+                                    <div
+                                        *ngIf="
+                                            typingComplete[turn.id] &&
+                                            (!getFollowup(idx) ||
+                                                followupTypingComplete[turn.id])
+                                        "
+                                        class="ds-chatbot__response-actions"
+                                    >
                                         <button
                                             *ngIf="!copiedByTurn[turn.id]"
                                             class="ds-button --icon --md"
@@ -217,7 +228,10 @@ export interface ChatbotTurn {
                                             aria-label="copy"
                                             (click)="
                                                 copyContent(
-                                                    getPrimary(turn, idx),
+                                                    getFullPrimaryText(
+                                                        turn,
+                                                        idx
+                                                    ),
                                                     turn.id
                                                 )
                                             "
@@ -391,7 +405,7 @@ export interface ChatbotTurn {
         />
     `
 })
-export class QDSChatbotComponent implements AfterViewInit, OnChanges {
+export class QDSChatbotComponent implements AfterViewInit {
     @Input() askInputAttachHandler?: () => void;
     @Input() askInputDisabled?: boolean;
     @Input() askInputId?: string;
@@ -421,8 +435,7 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
     @ViewChild('chatbotContentRef')
     chatbotContentRef?: ElementRef<HTMLDivElement>;
 
-    // Local UI state
-    openChatbotSidesheet = false; // moved from (incorrect) file-level scope
+    openChatbotSidesheet = false;
     isExtended = false;
     hasConsented = false;
     conversation: ChatbotTurn[] = [];
@@ -433,6 +446,12 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
     copiedByTurn: Record<string, boolean> = {};
     activeThumbs: Record<string, 'up' | 'down' | null> = {};
     feedbackVisibility: Record<string, boolean> = {};
+
+    // Typing effect state
+    typingText: Record<string, string> = {};
+    typingComplete: Record<string, boolean> = {};
+    followupTypingText: Record<string, string> = {};
+    followupTypingComplete: Record<string, boolean> = {};
 
     @ViewChild('textareaRef') textareaRef?: ElementRef<HTMLTextAreaElement>;
     minRows = 1;
@@ -456,6 +475,10 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
             this.copiedByTurn = {};
             this.activeThumbs = {} as any;
             this.feedbackVisibility = {};
+            this.typingText = {};
+            this.typingComplete = {};
+            this.followupTypingText = {};
+            this.followupTypingComplete = {};
         }
 
         if (!this.conversation || this.conversation.length === 0) {
@@ -566,6 +589,11 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
         return this.getPrimaryResponse(raw);
     }
 
+    getFullPrimaryText(turn: any, idx: number): string {
+        // Returns the complete primary text for copying purposes
+        return this.getPrimary(turn, idx);
+    }
+
     getFollowup(idx: number): string {
         const baseItem =
             (this.responses[idx] as any) || this.responses[0] || {};
@@ -657,6 +685,16 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
         this.activeThumbs = { ...this.activeThumbs, [id]: null } as any;
         this.feedbackVisibility = { ...this.feedbackVisibility, [id]: false };
         this.copiedByTurn = { ...this.copiedByTurn, [id]: false };
+
+        // Reset typing state
+        this.typingText = { ...this.typingText, [id]: '' };
+        this.typingComplete = { ...this.typingComplete, [id]: false };
+        this.followupTypingText = { ...this.followupTypingText, [id]: '' };
+        this.followupTypingComplete = {
+            ...this.followupTypingComplete,
+            [id]: false
+        };
+
         this.onRetry.emit(turn);
         // Re-schedule visibility for retried response
         this.showResponseWithDelay(id);
@@ -704,8 +742,81 @@ export class QDSChatbotComponent implements AfterViewInit, OnChanges {
         const safeDelay = effectiveDelay >= 0 ? effectiveDelay : 0;
         setTimeout(() => {
             this.visibleResponses = { ...this.visibleResponses, [id]: true };
+            this.startTypingEffect(id);
             this.scrollToBottom();
         }, safeDelay);
+    }
+
+    // Typing effect for response text
+    private startTypingEffect(turnId: string) {
+        const turn = this.conversation.find(t => t.id === turnId);
+        if (!turn) return;
+
+        const turnIndex = this.conversation.findIndex(t => t.id === turnId);
+        const primaryText = this.getPrimary(turn, turnIndex);
+        const followupText = this.getFollowup(turnIndex);
+
+        // Reset typing state
+        this.typingText = { ...this.typingText, [turnId]: '' };
+        this.typingComplete = { ...this.typingComplete, [turnId]: false };
+        this.followupTypingText = { ...this.followupTypingText, [turnId]: '' };
+        this.followupTypingComplete = {
+            ...this.followupTypingComplete,
+            [turnId]: false
+        };
+
+        // Type primary response
+        this.typeText(primaryText, turnId, 'primary', () => {
+            this.typingComplete = { ...this.typingComplete, [turnId]: true };
+
+            // Start typing followup if it exists
+            if (followupText) {
+                setTimeout(() => {
+                    this.typeText(followupText, turnId, 'followup', () => {
+                        this.followupTypingComplete = {
+                            ...this.followupTypingComplete,
+                            [turnId]: true
+                        };
+                    });
+                }, 300); // Small delay before followup
+            }
+        });
+    }
+
+    private typeText(
+        text: string,
+        turnId: string,
+        type: 'primary' | 'followup',
+        onComplete?: () => void
+    ) {
+        let index = 0;
+        const speed = 15; // Milliseconds per character
+
+        const typeNextChar = () => {
+            if (index < text.length) {
+                const currentText = text.substring(0, index + 1);
+
+                if (type === 'primary') {
+                    this.typingText = {
+                        ...this.typingText,
+                        [turnId]: currentText
+                    };
+                } else {
+                    this.followupTypingText = {
+                        ...this.followupTypingText,
+                        [turnId]: currentText
+                    };
+                }
+
+                index++;
+                setTimeout(typeNextChar, speed);
+                this.scrollToBottom();
+            } else {
+                if (onComplete) onComplete();
+            }
+        };
+
+        typeNextChar();
     }
 
     // Ensure the content area stays scrolled to the latest message
