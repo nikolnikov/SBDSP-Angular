@@ -13,7 +13,11 @@ const config: StorybookConfig = {
 };
 export default {
     ...config,
-    webpackFinal: async config => {
+    webpackFinal: async (config: any) => {
+        config.optimization = config.optimization || {};
+        config.optimization.runtimeChunk = {
+            name: (entrypoint: any) => `runtime-${entrypoint.name}`
+        };
         config.plugins?.push(
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(
